@@ -13,7 +13,7 @@ const authRouter = express.Router();
  * @access Public
  */
 
-authRouter.post("/resgiter", registerUserController);
+authRouter.post("/register", registerUserController);
 
 /**
  * @route POST /api/auth/login
