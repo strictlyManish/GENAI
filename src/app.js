@@ -7,6 +7,7 @@ app.use(express.json());
 
 //API
 app.use("/api/auth",authRouter);
+app.use("/api",authRouter);
 
 
 
