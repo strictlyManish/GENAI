@@ -10,7 +10,7 @@ const SALT_ROUNDS = 12;
  * @route   POST /api/auth/register
  * @access  Public
  */
-async function registerUserController(req, res) {
+async function RegisterUserController(req, res) {
   try {
     const { username, email, password } = req.body;
 
@@ -82,7 +82,7 @@ async function registerUserController(req, res) {
  * @route   POST /api/auth/login
  * @access  Public
  */
-async function loginUserController(req, res) {
+async function LoginUserController(req, res) {
   try {
     const { email, password } = req.body;
 
@@ -144,8 +144,8 @@ async function loginUserController(req, res) {
 /**
  * @desc    Logout User Controller
  * @route   POST /api/auth/logout
- * @access  Public */
-
+ * @access  Public
+ * */
 
 async function LogoutUserController(req, res) {
   try {
@@ -181,8 +181,44 @@ async function LogoutUserController(req, res) {
   }
 }
 
+/**
+ * @desc    Get current logged in user data
+ * @route   GET /api/auth/get-me
+ * @access  private
+ */
+
+async function GetUserController(req, res) {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        message: "Unauthorized access",
+      });
+    }
+
+    const user = await userModel
+      .findById(req.user.id)
+      .select("_id username email");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "User details fetched successfully",
+      user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Something went wrong",
+    });
+  }
+}
+
 module.exports = {
-  registerUserController,
-  loginUserController,
+  RegisterUserController,
+  LoginUserController,
   LogoutUserController,
+  GetUserController,
 };
