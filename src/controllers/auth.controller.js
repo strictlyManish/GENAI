@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
+const BlackListModel = require("../models/blacklist.model");
 
 const SALT_ROUNDS = 12;
 
@@ -8,11 +9,6 @@ const SALT_ROUNDS = 12;
  * @desc    Register a new user
  * @route   POST /api/auth/register
  * @access  Public
- * @param   {Object} req.body
- * @param   {string} req.body.username - Unique username
- * @param   {string} req.body.email - Unique email address
- * @param   {string} req.body.password - User password (min 6 chars)
- * @returns {Object} JSON response with user info and JWT token
  */
 async function registerUserController(req, res) {
   try {
@@ -85,10 +81,6 @@ async function registerUserController(req, res) {
  * @desc    Login existing user
  * @route   POST /api/auth/login
  * @access  Public
- * @param   {Object} req.body
- * @param   {string} req.body.email - Registered email
- * @param   {string} req.body.password - User password
- * @returns {Object} JSON response with user info and JWT token
  */
 async function loginUserController(req, res) {
   try {
@@ -149,4 +141,48 @@ async function loginUserController(req, res) {
   }
 }
 
-module.exports = { registerUserController, loginUserController };
+/**
+ * @desc    Logout User Controller
+ * @route   POST /api/auth/logout
+ * @access  Public */
+
+
+async function LogoutUserController(req, res) {
+  try {
+    const token = req.cookies?.token;
+
+    if (!token) {
+      return res.status(400).json({
+        success: false,
+        message: "No token found. User already logged out.",
+      });
+    }
+
+    await BlackListModel.create({
+      token,
+      createdAt: new Date(),
+    });
+
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "strict",
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Logout failed",
+      error: error.message,
+    });
+  }
+}
+
+module.exports = {
+  registerUserController,
+  loginUserController,
+  LogoutUserController,
+};

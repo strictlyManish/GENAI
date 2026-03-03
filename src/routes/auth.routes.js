@@ -3,6 +3,7 @@ const express = require("express");
 const {
   registerUserController,
   loginUserController,
+  LogoutUserController,
 } = require("../controllers/auth.controller");
 
 const authRouter = express.Router();
@@ -22,5 +23,13 @@ authRouter.post("/register", registerUserController);
  */
 
 authRouter.post("/login", loginUserController);
+
+/**
+ * @route GET /api/auth/logout
+ * @description Logout a user and also blacklist token
+ * @access Public
+ */
+
+authRouter.get("/logout",LogoutUserController);
 
 module.exports = authRouter;
