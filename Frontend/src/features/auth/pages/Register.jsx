@@ -25,7 +25,7 @@ export default function Register() {
 
         {/* Username */}
         <div className="flex flex-col">
-          <div className="flex items-center my-2 border bg-indigo-500/5 border-gray-500/10 rounded gap-1 pl-2">
+          <div className="flex items-center my-2 border bg-indigo-100/5 border-gray-500/10 rounded gap-1 pl-2">
             <input
               className="w-full outline-none bg-transparent py-2.5"
               type="text"
@@ -48,7 +48,7 @@ export default function Register() {
 
         {/* Email */}
         <div className="flex flex-col">
-          <div className="flex items-center my-2 border bg-indigo-500/5 border-gray-500/10 rounded gap-1 pl-2">
+          <div className="flex items-center my-2 border bg-indigo-100/5 border-gray-500/10 rounded gap-1 pl-2">
             <input
               className="w-full outline-none bg-transparent py-2.5"
               type="email"
@@ -71,7 +71,7 @@ export default function Register() {
 
         {/* Password */}
         <div className="flex flex-col">
-          <div className="flex items-center mt-2 border bg-indigo-500/5 border-gray-500/10 rounded gap-1 pl-2">
+          <div className="flex items-center mt-2 border bg-indigo-100/5 border-gray-500/10 rounded gap-1 pl-2">
             <input
               className="w-full outline-none bg-transparent py-2.5"
               type="password"

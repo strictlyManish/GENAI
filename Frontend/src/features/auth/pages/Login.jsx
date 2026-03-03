@@ -24,7 +24,7 @@ export default function Login() {
 
             {/* Email */}
             <div className="flex flex-col">
-                <div className="flex items-center my-2 border bg-indigo-500/5 border-gray-500/10 rounded gap-1 pl-2">
+                <div className="flex items-center my-2 border bg-indigo-100/5 border-gray-500/10 rounded gap-1 pl-2">
                     <input
                         className="w-full outline-none bg-transparent py-2.5"
                         type="email"
@@ -47,7 +47,7 @@ export default function Login() {
 
             {/* Password */}
             <div className="flex flex-col">
-                <div className="flex items-center mt-2 border bg-indigo-500/5 border-gray-500/10 rounded gap-1 pl-2">
+                <div className="flex items-center mt-2 border bg-indigo-100/5 border-gray-200/10 rounded gap-1 pl-2">
                     <input
                         className="w-full outline-none bg-transparent py-2.5"
                         type="password"
