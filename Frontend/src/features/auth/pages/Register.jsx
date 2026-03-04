@@ -24,7 +24,7 @@ export default function Register() {
     <main className="flex justify-center items-center min-h-screen bg-[#161616]">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="text-gray-500 max-w-[340px] w-full mx-4 md:p-6 p-4 py-8 text-left text-sm"
+        className="text-gray-500 max-w-85 w-full mx-4 md:p-6 p-4 py-8 text-left text-sm"
       >
         <h2 className="text-2xl font-bold mb-9 text-center text-gray-100">
           Welcome

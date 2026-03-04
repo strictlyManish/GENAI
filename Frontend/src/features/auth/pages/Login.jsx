@@ -15,9 +15,11 @@ export default function Login() {
 
   const onSubmit = async ({ email, password }) => {
     await handleLogin({ email, password });
-    navigate("/register");
+    navigate("/");
     reset();
   };
+
+  if(loading) return <h1>Loading..</h1>
 
   return (
     <main className="flex justify-center items-center min-h-screen">
@@ -35,6 +37,7 @@ export default function Login() {
             <input
               className="w-full outline-none bg-transparent py-2.5"
               type="email"
+              autoComplete="on"
               placeholder="Email"
               {...register("email", {
                 required: "Email is required",
