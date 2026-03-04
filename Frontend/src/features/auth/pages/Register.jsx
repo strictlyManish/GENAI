@@ -1,16 +1,23 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Register() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
+  const navigate = useNavigate();
+  const { loading, handleRegister } = useAuth();
 
-  const onSubmit = async (data) => {
-    console.log(data)
+  const onSubmit = async ({username ,email, password }) => {
+    await handleRegister({ username,email, password });
+    navigate("/login");
+    reset();
   };
 
   return (
@@ -63,9 +70,7 @@ export default function Register() {
             />
           </div>
           {errors.email && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.email.message}
-            </p>
+            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
           )}
         </div>
 
@@ -79,8 +84,8 @@ export default function Register() {
               {...register("password", {
                 required: "Password is required",
                 minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
+                  value: 4,
+                  message: "Password must be at least 4 characters",
                 },
               })}
             />
@@ -92,13 +97,12 @@ export default function Register() {
           )}
         </div>
 
-        
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || loading}
           className="w-full mt-4 mb-3 bg-indigo-500 hover:bg-indigo-600/90 transition py-2.5 rounded text-white font-medium disabled:opacity-50"
         >
-          {isSubmitting ? "Registering..." : "Register"}
+          {loading ? "Registering..." : "Register"}
         </button>
 
         <p className="text-center mt-4">
