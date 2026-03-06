@@ -1,45 +1,31 @@
 const pdfParse = require("pdf-parse");
-const InterviewReport = require("../models/interviewReport.model");
-const GenerateInterviewReport = require("../services/generateInterviewReport");
+const interviewReportModel = require("../models/interviewReport.model");
+const generateInterviewReport = require("../service/ai.service");
 
 async function InterviewController(req, res) {
-  try {
-    if (!req.file) {
-      return res.status(400).json({
-        message: "Resume file is required",
-      });
-    };
+  const resumeContent = await new pdfParse.PDFParse(
+    Uint8Array.from(req.file.buffer),
+  ).getText();
+  const { selfDescription, jobDescription } = req.body;
 
-    const { jobDescription, selfDescription } = req.body;
-    const pdfData = await pdfParse(req.file.buffer);
-    const resumeText = pdfData.text;
+  const interViewReportByAi = await generateInterviewReport({
+    resume: resumeContent.text,
+    selfDescription,
+    jobDescription,
+  });
 
-    const aiReports = await GenerateInterviewReport({
-      resume: resumeText,
-      jobDescription,
-      selfDescription,
-    });
+  const interviewReport = await interviewReportModel.create({
+    user: req.user.id,
+    resume: resumeContent.text,
+    selfDescription,
+    jobDescription,
+    ...interViewReportByAi,
+  });
 
-    const userInterviewReport = await InterviewReport.create({
-      user: req.user.id,
-      resume: resumeText,
-      selfDescription,
-      jobDescription,
-      ...aiReports,
-    });
-
-    return res.status(200).json({
-      message: "Report Generated Successfully",
-      userInterviewReport,
-    });
-  } catch (error) {
-    console.error("Interview Report Error:", error);
-
-    return res.status(500).json({
-      message: "Failed to generate interview report",
-      error: error.message,
-    });
-  }
+  res.status(201).json({
+    message: "Interview report generated successfully.",
+    interviewReport,
+  });
 }
 
 module.exports = InterviewController;

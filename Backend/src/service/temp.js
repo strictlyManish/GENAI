@@ -70,10 +70,6 @@ Bachelor's in Science with physics
 
 const selfDescription = `
 I am a MERN stack developer with around 3 years of experience mainly focused on backend development using Node.js and MongoDB. I have worked on building REST APIs, implementing authentication using JWT, and optimizing database queries.
-
-I enjoy working on system design problems and improving application performance. Recently, I have been exploring AI integrations using Gemini API and learning about scalable backend architecture. I have some basic knowledge of Redis and Docker but haven't used them extensively in production.
-
-I am currently targeting backend developer roles where I can work on scalable systems and improve my expertise in distributed systems and performance optimization
 `;
 
 const jobDescription = 
