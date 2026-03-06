@@ -3,6 +3,7 @@ const app = express();
 const authRouter = require("./routes/auth.routes");
 const cookie_parser = require("cookie-parser");
 const cors = require("cors");
+const InterviewRoute = require("./routes/interview.routes");
 
 // Middlewares
 app.use(express.json());
@@ -14,8 +15,12 @@ app.use(
   }),
 );
 
+
 //API
 app.use("/api/auth", authRouter);
-app.use("/api", authRouter);
+app.use("/api/interview", InterviewRoute);
+
+
+
 
 module.exports = app;

@@ -1,46 +1,34 @@
-const resume = `# Rajz Manish
+const resume = `
+Rajz Manish
+manish@gmail.com
++91-9645256358
+Bihar,India
+LinkedIn: https://linkedin.com/in/rajzmanish
+GitHub: https://github.com/striclymanish
 
-**Email:** manish@gmail.com
-**Phone:** +91-9645256358
-**Location:** India
-**LinkedIn:** https://linkedin.com/in/rajzmanish
-**GitHub:** https://github.com/striclymanish
 
-------------------------------------------------------------------------
-
- Professional Summary
-
+Professional Summary
 MERN Stack Developer with around 3+ years of experience specializing in
 backend development using Node.js and MongoDB. Skilled in building
 scalable REST APIs, implementing secure authentication systems using
-JWT, and optimizing database queries for improved performance.
+JWT, and optimizing database queries for improved performance
 
-Passionate about system design and backend optimization. Currently
-exploring AI integrations using the Gemini API and learning scalable
-backend architectures. Familiar with Redis and Docker and continuously
-improving production-level backend development skills.
-
-------------------------------------------------------------------------
-
- Technical Skills
-
-**Languages:** JavaScript, HTML, CSS
-**Frontend:** React.js, Bootstrap
-**Backend:** Node.js, Express.js
-**Database:** MongoDB
-**Authentication:** JWT, API Security
-**Tools:** Git, GitHub, Postman
-**Other:** REST API Development, System Design Basics, Performance
+Technical Skills
+Languages: JavaScript, HTML, CSS
+Frontend: React.js, Bootstrap
+Backend: Node.js, Express.js
+Database: MongoDB
+Authentication: JWT, API Security
+Tools: Git, GitHub, Postman
+Other: REST API Development, System Design Basics, Performance
 Optimization
-**Learning:** Redis, Docker, AI API Integration
+Learning: Redis, Docker, AI API Integration
 
-------------------------------------------------------------------------
 
- Work Experience
+Work Experience
+Backend Developer | Freelance | Personal Projects
 
-# Backend Developer | Freelance | Personal Projects
-
-*2022 -- Present*
+2022 -- Present
 
 -   Developed RESTful APIs using Node.js and Express.js.
 -   Designed and optimized MongoDB database structures for scalable
@@ -50,40 +38,31 @@ Optimization
 -   Integrated external APIs and explored AI integrations using Gemini
     API.
 
-------------------------------------------------------------------------
 
- Projects
+Projects
 
-# Authentication API System
-
--   Built a secure authentication system using **Node.js, Express, and
-    JWT**.
+Authentication API System
+-   Built a secure authentication system using Node.js, Express, and
+    JWT.
 -   Implemented login, registration, and protected routes.
 
-# MERN Blog Application
-
--   Developed a full-stack blog platform using **MongoDB, Express,
-    React, and Node.js**.
+MERN Blog Application
+-   Developed a full-stack blog platform using MongoDB, Express,
+    React, and Node.js.
 -   Users can create, edit, and delete blog posts.
 
-# AI Integration Project
 
--   Integrated **Gemini API** to generate AI-based responses inside an
+AI Integration Project
+-   Integrated Gemini API to generate AI-based responses inside an
     application.
 -   Implemented backend API handling for AI requests.
 
-------------------------------------------------------------------------
 
- Education
+Education
+Bachelor's in Science with physics
 
-Bachelor's Degree / Relevant Degree\
-University Name\
-Year of Completion
-
-------------------------------------------------------------------------
 
  Strengths
-
 -   Backend System Design
 -   Problem Solving
 -   API Development
@@ -97,7 +76,9 @@ I enjoy working on system design problems and improving application performance.
 I am currently targeting backend developer roles where I can work on scalable systems and improve my expertise in distributed systems and performance optimization
 `;
 
-const jobDescription = `Backend Developer (MERN Stack) – Job Description
+const jobDescription = 
+`
+Backend Developer (MERN Stack) – Job Description
 
 We are looking for a skilled Backend Developer with strong experience in Node.js and MongoDB to design, develop, and maintain scalable backend systems. The ideal candidate should have experience building RESTful APIs, implementing secure authentication mechanisms, and optimizing database performance.
 

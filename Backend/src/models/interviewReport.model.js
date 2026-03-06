@@ -68,28 +68,38 @@ const PreprationPlanSchema = mongoose.Schema({
   ],
 });
 
-const InterViewSchemaReport = mongoose.Schema({
-  jobDescription: {
-    type: String,
-    required: [true, "Job Description is required"],
-  },
-  resume: {
-    type: String,
-  },
-  selfDescription: {
-    type: String,
-  },
-  matchScore: {
-    type: Number,
-    min: 0,
-    max: 100,
-  },
-  TechnicalQuestions: [TechnicalQuestionSchema],
-  BehavioralQuestions: [BehavioralQuestionSchema],
-  skillGaps: [SkillGapsSchema],
-  preprationPlan: [PreprationPlanSchema],
-},{ timestamps: true});
+const InterViewSchemaReport = mongoose.Schema(
+  {
+    jobDescription: {
+      type: String,
+      required: [true, "Job Description is required"],
+    },
+    resume: {
+      type: String,
+    },
+    selfDescription: {
+      type: String,
+    },
+    matchScore: {
+      type: Number,
+      min: 0,
+      max: 100,
+    },
+    TechnicalQuestions: [TechnicalQuestionSchema],
+    BehavioralQuestions: [BehavioralQuestionSchema],
+    skillGaps: [SkillGapsSchema],
+    preprationPlan: [PreprationPlanSchema],
 
- 
-const InterviewReport = mongoose.model("InterviewReport", InterViewSchemaReport);
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
+  },
+  { timestamps: true },
+);
+
+const InterviewReport = mongoose.model(
+  "InterviewReport",
+  InterViewSchemaReport,
+);
 module.exports = InterviewReport;
