@@ -30,32 +30,31 @@ Backend Developer | Freelance | Personal Projects
 
 2022 -- Present
 
--   Developed RESTful APIs using Node.js and Express.js.
--   Designed and optimized MongoDB database structures for scalable
-    applications.
--   Implemented JWT-based authentication and secure API endpoints.
--   Improved backend performance by optimizing database queries.
--   Integrated external APIs and explored AI integrations using Gemini
-    API.
+Developed RESTful APIs using Node.js and Express.js.
+Designed and optimized MongoDB database structures for scalable
+applications.
+Implemented JWT-based authentication and secure API endpoints.
+Improved backend performance by optimizing database queries.
+Integrated external APIs and explored AI integrations using Gemini API.
 
 
 Projects
 
 Authentication API System
--   Built a secure authentication system using Node.js, Express, and
+Built a secure authentication system using Node.js, Express, and
     JWT.
--   Implemented login, registration, and protected routes.
+Implemented login, registration, and protected routes.
 
 MERN Blog Application
--   Developed a full-stack blog platform using MongoDB, Express,
+Developed a full-stack blog platform using MongoDB, Express,
     React, and Node.js.
--   Users can create, edit, and delete blog posts.
+Users can create, edit, and delete blog posts.
 
 
 AI Integration Project
--   Integrated Gemini API to generate AI-based responses inside an
+Integrated Gemini API to generate AI-based responses inside an
     application.
--   Implemented backend API handling for AI requests.
+Implemented backend API handling for AI requests.
 
 
 Education
@@ -63,10 +62,10 @@ Bachelor's in Science with physics
 
 
  Strengths
--   Backend System Design
--   Problem Solving
--   API Development
--   Performance Optimization`;
+Backend System Design
+Problem Solving
+API Development
+Performance Optimization`;
 
 const selfDescription = `
 I am a MERN stack developer with around 3 years of experience mainly focused on backend development using Node.js and MongoDB. I have worked on building REST APIs, implementing authentication using JWT, and optimizing database queries.

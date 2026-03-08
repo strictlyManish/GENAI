@@ -1,0 +1,37 @@
+const pdfParse = require("pdf-parse")
+const interviewReportModel = require("../models/interviewReport.model")
+const aiReport = require("../service/ai.service");
+
+
+
+/**
+ * @description Controller to generate interview report based on user self description, resume and job description.
+ */
+async function InterviewController(req, res) {
+
+    const resumeContent = await (new pdfParse.PDFParse(Uint8Array.from(req.file.buffer))).getText()
+    const { selfDescription, jobDescription } = req.body
+
+    const interViewReportByAi = await aiReport({
+        resume: resumeContent.text,
+        selfDescription,
+        jobDescription
+    })
+
+    const interviewReport = await interviewReportModel.create({
+        user: req.user.id,
+        resume: resumeContent.text,
+        selfDescription,
+        jobDescription,
+        ...interViewReportByAi
+    })
+
+    res.status(201).json({
+        message: "Interview report generated successfully.",
+        interviewReport
+    })
+
+};
+
+
+module.exports = InterviewController

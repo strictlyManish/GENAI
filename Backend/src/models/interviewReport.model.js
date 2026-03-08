@@ -64,7 +64,7 @@ const preparationPlanSchema = new mongoose.Schema({
     } ]
 })
 
-const interviewReportSchema = new mongoose.Schema({
+const InterviewModel = new mongoose.Schema({
     jobDescription: {
         type: String,
         required: [ true, "Job description is required" ]
@@ -87,13 +87,12 @@ const interviewReportSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users"
-    },
-    
+    }
 }, {
     timestamps: true
 })
 
 
-const interviewReportModel = mongoose.model("InterviewReport", interviewReportSchema);
+const interviewReportModel = mongoose.model("InterviewReport", InterviewModel);
 
 module.exports = interviewReportModel;  
