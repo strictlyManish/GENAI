@@ -1,70 +1,88 @@
-const { GoogleGenAI } = require("@google/genai");
+const Groq = require("groq-sdk");
 const { z } = require("zod");
-const { zodToJsonSchema } = require("zod-to-json-schema");
 
-// 1. DEFINE YOUR SCHEMA
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
+
 const interviewReportSchema = z.object({
-    matchScore: z.number().describe("A score between 0 and 100 indicating how well the candidate matches the JD"),
-    technicalQuestions: z.array(z.object({
-        question: z.string().describe("The technical question"),
-        intention: z.string().describe("Why the interviewer is asking this"),
-        answer: z.string().describe("The ideal points to cover in the answer")
-    })).describe("List of technical questions"),
-    behavioralQuestions: z.array(z.object({
-        question: z.string().describe("The behavioral/soft-skill question"),
-        intention: z.string().describe("What they are testing (e.g., leadership, conflict)"),
-        answer: z.string().describe("The recommended STAR method approach")
-    })).describe("List of behavioral questions"),
-    skillGaps: z.array(z.object({
-        skill: z.string().describe("The missing skill"),
-        severity: z.enum(["low", "medium", "high"]).describe("Importance of this gap")
-    })).describe("Critical gaps found in the profile"),
-    preparationPlan: z.array(z.object({
-        day: z.number().describe("Day number"),
-        focus: z.string().describe("Topic of the day"),
-        tasks: z.array(z.string()).describe("Specific tasks/resources")
-    })).describe("Day-wise study plan")
+  matchScore: z.number(),
+  technicalQuestions: z.array(
+    z.object({
+      question: z.string(),
+      intention: z.string(),
+      answer: z.string(),
+    })
+  ),
+  behavioralQuestions: z.array(
+    z.object({
+      question: z.string(),
+      intention: z.string(),
+      answer: z.string(),
+    })
+  ),
+  skillGaps: z.array(
+    z.object({
+      skill: z.string(),
+      severity: z.enum(["low", "medium", "high"]),
+    })
+  ),
+  preparationPlan: z.array(
+    z.object({
+      day: z.number(),
+      focus: z.string(),
+      tasks: z.array(z.string()),
+    })
+  ),
 });
 
-// 2. INITIALIZE AI
-const ai = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY
-});
+async function generateInterviewReport({
+  resume,
+  selfDescription,
+  jobDescription,
+}) {
 
-async function generateInterviewReport({ resume, selfDescription, jobDescription }) {
-    // CRITICAL: Convert Zod to Clean OpenAPI 3.0 for Gemini
-    const jsonSchema = zodToJsonSchema(interviewReportSchema, { target: "openapi3" });
-    
-    // Remove metadata fields that Gemini rejects
-    delete jsonSchema.$schema;
-    delete jsonSchema.definitions;
+  const prompt = `
+Generate an interview report in JSON format.
 
-    const prompt = `
-        Generate an interview report for a candidate with the following details.
-        RESUME: ${resume}
-        SELF-DESCRIPTION: ${selfDescription}
-        JOB DESCRIPTION: ${jobDescription}
-    `;
+Return ONLY valid JSON.
+Do not wrap JSON in markdown or code blocks.
 
-    try {
-        const response = await ai.models.generateContent({
-            model: "gemini-3-flash-preview", // Use 1.5-flash or 2.0-flash for high stability
-            contents: [{ role: "user", parts: [{ text: prompt }] }],
-            config: {
-                responseMimeType: "application/json",
-                responseSchema: jsonSchema, // Forces structured output
-                temperature: 0.1, // Keeps results consistent/factual
-            }
-        });
+SCHEMA:
+${JSON.stringify(interviewReportSchema.shape, null, 2)}
 
-        // The response.text will be a pure JSON string
-        // return JSON.parse(response.text);
+RESUME:
+${resume}
 
-        console.log(response.text)
-    } catch (error) {
-        console.error("AI Generation Error:", error.message);
-        throw error;
-    }
+SELF DESCRIPTION:
+${selfDescription}
+
+JOB DESCRIPTION:
+${jobDescription}
+`;
+
+  try {
+
+    const response = await groq.chat.completions.create({
+      model: "openai/gpt-oss-20b",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.1,
+    });
+
+    let text = response.choices[0].message.content;
+
+    // 🔧 Remove markdown code blocks if present
+    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+
+    const parsed = JSON.parse(text);
+
+    const validated = interviewReportSchema.parse(parsed);
+
+    return validated
+  } catch (error) {
+    console.error("AI Generation Error:", error);
+    throw error;
+  }
 }
 
-module.exports = { generateInterviewReport };
+module.exports = generateInterviewReport

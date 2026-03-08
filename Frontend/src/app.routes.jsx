@@ -3,6 +3,7 @@ import Login from "./features/auth/pages/Login"
 import Register from "./features/auth/pages/Register"
 import Protected from "./features/auth/components/Protected";
 import PublicRoute from "./features/auth/components/PublicRoute";
+import Home from "./features/ai/pages/Home";
 
 
 export const router = createBrowserRouter([
@@ -16,6 +17,6 @@ export const router = createBrowserRouter([
     },
     {
         path:"/",
-        element:<Protected><h1>Home page</h1></Protected>
+        element:<Protected><Home/></Protected>
     },
 ]);
