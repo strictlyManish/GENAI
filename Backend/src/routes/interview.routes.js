@@ -2,7 +2,11 @@ const express = require("express");
 const AuthMiddleware = require("../middlewares/auth.middleware");
 const InterviewRoute = express.Router();
 const upload = require("../middlewares/file.middleware");
-const InterviewController = require("../controllers/ai.controller");
+const {
+  InterviewController,
+  GetinterviewreportByidController,
+  GetAllReportsController,
+} = require("../controllers/ai.controller");
 
 /**
  * @route POST /api/interview
@@ -10,7 +14,32 @@ const InterviewController = require("../controllers/ai.controller");
  * @access private
  */
 
-InterviewRoute.post("/",AuthMiddleware,upload.single("resume"),InterviewController)
+InterviewRoute.post(
+  "/",
+  AuthMiddleware,
+  upload.single("resume"),
+  InterviewController,
+);
 
+/**
+ * @route GET /api/interview
+ * @description Get all interview reports of the user
+ * @access private
+ */
+
+InterviewRoute.get(
+  "/report/:interviewId",
+  AuthMiddleware,
+  GetinterviewreportByidController,
+);
+
+/**
+ * @route GET api/interview/
+ * @description Get all interview reports of logged user
+ * @access private
+ *
+ */
+
+InterviewRoute.get("/", AuthMiddleware, GetAllReportsController);
 
 module.exports = InterviewRoute;

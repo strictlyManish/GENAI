@@ -42,7 +42,7 @@ export default function Footer() {
                             <h3 className='text-sm text-white font-medium'>Subscribe for Guidence ai</h3>
                             <div className="flex items-center border gap-2 border-white/20 h-13 max-w-80 w-full rounded-full overflow-hidden mt-4">
                                 <input type="email" placeholder="Enter your email.." className="w-full h-full pl-6 outline-none text-sm bg-transparent text-white placeholder-white/60 placeholder:text-xs" required />
-                                <button type="submit" className="bg-pink-400 active:scale-95 transition w-56 h-10 rounded-full text-sm text-white cursor-pointer mr-1.5">Subscribe</button>
+                                <button type="submit" className="bg-blue-400 active:scale-95 transition w-56 h-10 rounded-full text-sm text-white cursor-pointer mr-1.5">Subscribe</button>
                             </div>
                         </div>
             

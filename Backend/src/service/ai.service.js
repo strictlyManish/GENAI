@@ -34,6 +34,7 @@ const interviewReportSchema = z.object({
       tasks: z.array(z.string()),
     })
   ),
+  title: z.string(),
 });
 
 async function generateInterviewReport({

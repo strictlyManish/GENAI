@@ -1,8 +1,8 @@
 function Navbar() {
   return (
-    <div className="text-sm text-white w-full">
+    <div className="text-sm text-white w-full fixed">
       <nav className="relative h-[70px] flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-gray-700 text-gray-100 transition-all shadow">
-        <a href="https://prebuiltui.com">GUIDENCE AI</a>
+        <a href="https://prebuiltui.com">GUIDENCE <span className="text-pink-500">AI</span></a>
         <ul className="hidden md:flex items-center space-x-8 md:pl-28">
           <li>
             <a href="#">Home</a>
@@ -18,7 +18,7 @@ function Navbar() {
           </li>
         </ul>
 
-        <button className="md:inline hidden bg-pink-500 hover:bg-gray-800 cursor-pointer  ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
+        <button className="md:inline hidden bg-blue-500 hover:bg-gray-800 cursor-pointer  ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
           Get started
         </button>
 
