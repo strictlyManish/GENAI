@@ -8,13 +8,13 @@ import { InterviewProvider } from "./features/ai/Interview.context.jsx";
 function App() {
   return (
     <div className="bg-[#1a1919] min-h-screen text-white">
-      <Navbar />
+      {/* <Navbar /> */}
       <AuthProvider>
         <InterviewProvider>
           <RouterProvider router={router} />
         </InterviewProvider>
       </AuthProvider>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

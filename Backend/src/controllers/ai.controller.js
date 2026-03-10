@@ -63,7 +63,7 @@ async function GetinterviewreportByidController(req, res) {
     const interviewReport = await interviewReportModel.findOne({
       _id: interviewId,
       user: req.user.id,
-    }).select( "-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan" );
+    });
 
     if (!interviewReport) {
       return res.status(404).json({
@@ -87,7 +87,8 @@ async function GetAllReportsController(req, res) {
   try {
     const interviewReports = await interviewReportModel
       .find({ user: req.user.id })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .select("-resume -selfDescription -jobDescription -__v -technicalQuestions -behavioralQuestions -skillGaps -preparationPlan");
 
 
     if(interviewReports.length === 0) {
