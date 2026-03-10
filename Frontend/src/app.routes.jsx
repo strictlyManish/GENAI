@@ -5,12 +5,16 @@ import Protected from "./features/auth/components/Protected";
 import PublicRoute from "./features/auth/components/PublicRoute";
 import Home from "./features/ai/pages/Home";
 import Interview from "./features/ai/pages/Interview";
-
+import Hero from "./pages/Hero"
 
 export const router = createBrowserRouter([
     {
         path:"/login",
         element:<PublicRoute><Login/></PublicRoute>
+    },
+    {
+        path:"/home",
+        element:<PublicRoute><Hero/></PublicRoute>
     },
     {
         path:"/register",

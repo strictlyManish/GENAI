@@ -1,11 +1,12 @@
 function Navbar() {
+
   return (
-    <div className="text-sm text-white w-full fixed">
-      <nav className="relative h-[70px] flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-gray-700 text-gray-100 transition-all shadow">
-        <a href="https://prebuiltui.com">GUIDENCE <span className="text-pink-500">AI</span></a>
+    <div className="text-sm text-white w-full fixed z-1">
+      <nav className="relative h-17.5 flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-transparent backdrop-blur-3xl text-gray-100 transition-all shadow">
+        <a href="/home">GUIDENCE <span className="text-pink-500">AI</span></a>
         <ul className="hidden md:flex items-center space-x-8 md:pl-28">
           <li>
-            <a href="#">Home</a>
+            <a href="/home">Home</a>
           </li>
           <li>
             <a href="#">Services</a>
@@ -18,9 +19,9 @@ function Navbar() {
           </li>
         </ul>
 
-        <button className="md:inline hidden bg-blue-500 hover:bg-gray-800 cursor-pointer  ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
+        <a href="/login" className="md:inline hidden bg-blue-500 hover:bg-gray-800 cursor-pointer  ml-20 px-9 py-2 rounded-full active:scale-95 transition-all">
           Get started
-        </button>
+        </a>
 
         <button
           aria-label="menu-btn"
@@ -37,7 +38,7 @@ function Navbar() {
           </svg>
         </button>
 
-        <div className="mobile-menu absolute top-[70px] left-0 w-full bg-white shadow-sm p-6 hidden md:hidden">
+        <div className="mobile-menu absolute top-17.5 left-0 w-full bg-white shadow-sm p-6 hidden md:hidden">
           <ul className="flex flex-col space-y-4 text-lg">
             <li>
               <a href="#" className="text-sm">

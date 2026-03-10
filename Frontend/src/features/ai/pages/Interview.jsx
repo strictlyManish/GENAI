@@ -207,7 +207,7 @@ const matchStatus = getMatchStatus(report.matchScore);
   const scoreStyle = getScoreStyles(report.matchScore);
 
   return (
-    <div className="min-h-screen bg-[#1a1919] text-slate-200 font-sans selection:bg-indigo-500/30">
+    <div className="min-h-screen pt-18 bg-[#0f0e0e] text-slate-200 font-sans selection:bg-indigo-500/30">
       <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-[280px_1fr_320px] min-h-screen">
         {/* ── Left Nav ── */}
         <nav className="backdrop-blur-xl p-6 flex flex-col justify-between sticky top-0 h-screen overflow-y-auto">
@@ -237,13 +237,12 @@ const matchStatus = getMatchStatus(report.matchScore);
         </nav>
 
         {/* ── Center Content ── */}
-        <main className="p-6 md:p-10 lg:p-14 overflow-y-auto max-h-screen">
+        <main className="md:p-10 lg:p-6">
           <header className="mb-10">
             <div className="flex items-center gap-4 mb-2">
-              <h2 className="text-3xl font-bold tracking-tight text-white capitalize">
+              <h2 className="text-3xl  tracking-tight text-white capitalize">
                 {activeNav.replace("-", " ")}
               </h2>
-              <div className="h-px flex-1 bg-slate-700 ml-4" />
             </div>
             <p className="text-slate-400 text-sm">
               {activeNav === "roadmap"
@@ -272,7 +271,7 @@ const matchStatus = getMatchStatus(report.matchScore);
         </main>
 
         {/* ── Right Sidebar ── */}
-        <aside className="border-t lg:border-t-0 lg:border-l border-slate-800 bg-slate-950/30 p-8 sticky top-0 h-screen">
+        <aside className="border-t mt-10 lg:border-t-0 lg:border-l border-slate-800 bg-slate-950/30 p-8 sticky top-0 h-screen">
           <div className="space-y-12">
             {/* Match Score */}
             <div className="text-center space-y-6">
