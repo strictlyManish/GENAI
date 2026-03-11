@@ -12,6 +12,7 @@ function Protected({ children }) {
     );
   }
 
+
   if (!user) {
     return <Navigate to="/home" replace />;
   }

@@ -6,6 +6,7 @@ import PublicRoute from "./features/auth/components/PublicRoute";
 import Home from "./features/ai/pages/Home";
 import Interview from "./features/ai/pages/Interview";
 import Hero from "./pages/Hero"
+import NotFound from "./pages/NotFound";
 
 export const router = createBrowserRouter([
     {
@@ -28,4 +29,8 @@ export const router = createBrowserRouter([
         path:"/interview/:interviewId",
         element:<Protected><Interview/></Protected>
     },
+    {
+        path:"*",
+        element:<NotFound/>
+    }
 ]);

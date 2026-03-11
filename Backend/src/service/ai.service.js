@@ -1,10 +1,16 @@
+// resumeInterviewService.js
 const Groq = require("groq-sdk");
 const { z } = require("zod");
+const { chromium } = require("playwright");
 
+// Initialize Groq SDK
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
+// -----------------------------
+// Zod Schemas
+// -----------------------------
 const interviewReportSchema = z.object({
   matchScore: z.number(),
   technicalQuestions: z.array(
@@ -37,6 +43,41 @@ const interviewReportSchema = z.object({
   title: z.string(),
 });
 
+const resumePdfSchema = z.object({
+  html: z.string(),
+});
+
+// -----------------------------
+// Playwright PDF generator
+// -----------------------------
+async function generatePdfForHTML(htmlContent) {
+  const browser = await chromium.launch({
+    // optional: use Brave browser
+    executablePath:
+      "C:\\Program Files\\BraveSoftware\\Brave-Browser\\Application\\brave.exe",
+    headless: true,
+  });
+
+  const page = await browser.newPage();
+
+  await page.setContent(htmlContent, {
+    waitUntil: "networkidle",
+  });
+
+  const pdfBuffer = await page.pdf({
+    path: "output.pdf",
+    format: "A4",
+    printBackground: true,
+  });
+
+  await browser.close();
+
+  return pdfBuffer;
+}
+
+// -----------------------------
+// Interview Report Generator
+// -----------------------------
 async function generateInterviewReport({
   resume,
   selfDescription,
@@ -70,7 +111,7 @@ ${jobDescription}
 
     let text = response.choices[0].message.content;
 
-    // 🔧 Remove markdown code blocks if present
+    // Remove markdown code blocks if present
     text = text
       .replace(/```json/g, "")
       .replace(/```/g, "")
@@ -87,81 +128,77 @@ ${jobDescription}
   }
 }
 
-const resumePdfSchema = z.object({
-  html: z.string(),
-});
-
+// -----------------------------
+// Resume PDF Generator
+// -----------------------------
 async function generateResumePdf({ resume, selfDescription, jobDescription }) {
-  const prompt = `
-You are a professional resume writer.
+    // Define CSS separately in your backend to save AI tokens
+    const cssStyles = `
+        body { font-family: 'Helvetica', sans-serif; line-height: 1.5; color: #333; }
+        .container { padding: 40px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #eee; }
+        .section { margin-top: 20px; }
+        .header { text-align: center; }
+    `;
 
-Generate a polished ATS-friendly resume in HTML format.
+    const prompt = `Generate a professional resume as a JSON object.
+                    Resume Data: ${resume}
+                    Target Job: ${jobDescription}
+                    Context: ${selfDescription}
 
-INPUT DATA
-Resume: ${resume}
-Self Description: ${selfDescription}
-Job Description: ${jobDescription}
+                    Output format:
+                    {
+                        "title": "Full Name - Resume",
+                        "html_body": "Only the HTML content inside the <body> tag. Use single quotes for attributes."
+                    }
+                    
+                    Focus on making it ATS-friendly and 1-2 pages. Use professional headings.`;
 
-RULES
-- Tailor the resume to the job description.
-- Emphasize relevant skills and achievements.
-- Use bullet points for experience.
-- Do NOT invent information.
+    try {
+        const response = await groq.chat.completions.create({
+            model: "openai/gpt-oss-20b",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.1,
+            // 1. Set max_tokens higher (4096 is a safe bet for resumes)
+            max_tokens: 4096, 
+            response_format: { type: "json_object" }, 
+        });
 
-HTML REQUIREMENTS
-- Output must be valid HTML.
-- No markdown or explanations.
-- Use semantic HTML tags.
+        const text = response.choices[0].message.content;
+        const parsed = JSON.parse(text);
 
-Structure:
-<header>
-<h1>Name</h1>
-<p>Contact Info</p>
+        // 2. Combine the AI's content with your CSS Skeleton
+        const fullHtml = `
+            <html>
+                <head>
+                    <style>${cssStyles}</style>
+                </head>
+                <body>
+                    <div class="container">
+                        ${parsed.html_body}
+                    </div>
+                </body>
+            </html>
+        `;
 
-<section>
-<h2>Professional Summary</h2>
+        // 3. Generate PDF from the combined HTML
+        const pdfBuffer = await generatePdfForHTML(fullHtml);
 
-<section>
-<h2>Skills</h2>
-
-<section>
-<h2>Work Experience</h2>
-
-<section>
-<h2>Education</h2>
-
-<section>
-<h2>Projects</h2>
-
-OUTPUT FORMAT:
-Return JSON with this schema:
-
-{
-  "html": "<html>...</html>"
-}
-`;
-
-  try {
-    const response = await groq.chat.completions.create({
-      model: "openai/gpt-oss-20b",
-      messages: [{ role: "user", content: prompt }],
-      temperature: 0.1,
-    });
-
-    let text = response.choices[0].message.content;
-
-    text = text
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-
-    const parsed = JSON.parse(text);
-
-    return resumePdfSchema.parse(parsed);
-  } catch (error) {
-    console.error("Resume Generation Error:", error);
-    throw error;
-  }
+        return pdfBuffer;
+    } catch (error) {
+        // If the API fails with 400, it's usually because the prompt or tokens need adjustment
+        console.error("Groq API Error:", error.message);
+        if (error.failed_generation) {
+            console.error("Partial content received:", error.failed_generation);
+        }
+        throw error;
+    }
 }
 
-module.exports = {  generateInterviewReport, generateResumePdf };
+// -----------------------------
+// Export functions
+// -----------------------------
+module.exports = {
+  generateInterviewReport,
+  generateResumePdf,
+};

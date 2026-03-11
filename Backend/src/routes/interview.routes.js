@@ -6,6 +6,7 @@ const {
   InterviewController,
   GetinterviewreportByidController,
   GetAllReportsController,
+  generateResumePdfController
 } = require("../controllers/ai.controller");
 
 /**
@@ -39,7 +40,15 @@ InterviewRoute.get(
  * @access private
  *
  */
-
 InterviewRoute.get("/", AuthMiddleware, GetAllReportsController);
+
+/**
+ * @route POST api/interview/resume/pdf/:interviewReportId
+ * @description Generate resume PDF for the given interview report ID
+ * @access private
+ * 
+ */
+
+InterviewRoute.post("/resume/pdf/:interviewReportId",AuthMiddleware,generateResumePdfController)
 
 module.exports = InterviewRoute;
