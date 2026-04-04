@@ -13,8 +13,8 @@ function App() {
         <InterviewProvider>
           <RouterProvider router={router} />
         </InterviewProvider>
-      </AuthProvider>
       <Footer />
+      </AuthProvider>
     </div>
   );
 }

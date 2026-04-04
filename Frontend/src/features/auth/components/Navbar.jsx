@@ -17,7 +17,6 @@ function Navbar() {
   return (
     <div className="text-sm text-white w-full fixed top-0 z-50">
       <nav className="relative h-17.5 flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 bg-transparent backdrop-blur-3xl text-gray-100 transition-all shadow-lg border-b border-white/5">
-        
         {/* Logo */}
         <a href="/home" className="text-lg font-bold tracking-tighter">
           GUIDANCE <span className="text-pink-500">AI</span>
@@ -30,21 +29,32 @@ function Navbar() {
               Home
             </a>
           </li>
-          <li>
-            <a href="/dashboard" className="hover:text-pink-500 transition-colors">
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a href="/interview" className="hover:text-pink-500 transition-colors">
-              Mock Interview
-            </a>
-          </li>
+
           <li>
             <a href="/resume" className="hover:text-pink-500 transition-colors">
               AI Resume
             </a>
           </li>
+          {user ? (
+            <>
+              <li>
+                <a
+                  href="/dashboard"
+                  className="hover:text-pink-500 transition-colors"
+                >
+                  Dashboard
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/interview"
+                  className="hover:text-pink-500 transition-colors"
+                >
+                  Mock Interview
+                </a>
+              </li>
+            </>
+          ) : null}
         </ul>
 
         {/* CTA Button */}
@@ -52,7 +62,7 @@ function Navbar() {
           onClick={logout}
           className="hidden md:inline-block bg-blue-600 hover:bg-blue-700 cursor-pointer px-8 py-2.5 rounded-full active:scale-95 transition-all font-medium"
         >
-          {user ? "Logout" :<a href="/register">Get start</a>}
+          {user ? "Logout" : <a href="/register">Get start</a>}
         </button>
 
         {/* Mobile Menu Toggle */}

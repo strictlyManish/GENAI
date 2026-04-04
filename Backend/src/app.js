@@ -8,6 +8,9 @@ const InterviewRoute = require("./routes/interview.routes");
 // Middlewares
 app.use(express.json());
 app.use(cookie_parser());
+app.use(express.static("public"));
+
+
 app.use(
   cors({
     origin: "http://localhost:5173",
