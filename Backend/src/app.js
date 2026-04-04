@@ -4,6 +4,8 @@ const authRouter = require("./routes/auth.routes");
 const cookie_parser = require("cookie-parser");
 const cors = require("cors");
 const InterviewRoute = require("./routes/interview.routes");
+const path = require("path");
+
 
 // Middlewares
 app.use(express.json());
@@ -24,6 +26,12 @@ app.use("/api/auth", authRouter);
 app.use("/api/interview", InterviewRoute);
 
 
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 
 module.exports = app;
