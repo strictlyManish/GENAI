@@ -22,12 +22,10 @@ app.use(
 app.use("/api/auth", authRouter);
 app.use("/api/interview", InterviewRoute);
 
-// Serve frontend build
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "public")));
 
-// Catch-all route (must come last)
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 module.exports = app;
