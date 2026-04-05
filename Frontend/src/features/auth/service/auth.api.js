@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://interview-gb4v.onrender.com",
+  baseURL: "http://localhost:3000",
   withCredentials: true,
 });
 
